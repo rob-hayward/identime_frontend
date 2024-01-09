@@ -1,11 +1,13 @@
 // RegistrationPage.js
 
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useWebAuthnRegistration from "../hooks/useWebAuthnRegistration";
 
 const RegistrationPage = () => {
   const [username, setUsername] = useState('');
   const { initiateWebAuthnRegistration, error } = useWebAuthnRegistration();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (error) {
@@ -15,7 +17,10 @@ const RegistrationPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await initiateWebAuthnRegistration(username);
+    const result = await initiateWebAuthnRegistration(username);
+    if (result && result.status === 'success') {
+      navigate('/dashboard'); // Redirect to the dashboard
+    }
   };
 
   return (
