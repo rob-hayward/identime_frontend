@@ -1,25 +1,25 @@
 // RegistrationPage.js
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useWebAuthnRegistration from "../hooks/useWebAuthnRegistration";
 
 const RegistrationPage = () => {
   const [username, setUsername] = useState('');
-  const { initiateWebAuthnRegistration, error } = useWebAuthnRegistration();
+  const { initiateWebAuthnRegistration } = useWebAuthnRegistration();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (error) {
-      console.error(error);
-    }
-  }, [error]);
+  const [registrationError, setRegistrationError] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const result = await initiateWebAuthnRegistration(username);
-    if (result && result.status === 'success') {
-      navigate('/dashboard'); // Redirect to the dashboard
+    try {
+      const result = await initiateWebAuthnRegistration(username);
+      if (result && result.status === 'success') {
+        navigate('/dashboard'); // Redirect to the dashboard
+      }
+    } catch (err) {
+      const errorMessage = err.response?.data?.detail || err.message || 'An error occurred during registration.';
+      setRegistrationError(errorMessage);
     }
   };
 
@@ -36,7 +36,7 @@ const RegistrationPage = () => {
         />
         <button type="submit">Register with WebAuthn</button>
       </form>
-      {error && <p>Error: {error.message}</p>}
+      {registrationError && <p>Error: {registrationError}</p>}
     </div>
   );
 };

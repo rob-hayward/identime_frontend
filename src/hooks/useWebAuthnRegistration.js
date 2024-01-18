@@ -22,7 +22,8 @@ const useWebAuthnRegistration = () => {
   const arrayBufferToBase64 = (buffer) => {
     let binary = '';
     const bytes = new Uint8Array(buffer);
-    for (let i = 0; i < bytes.byteLength; i++) {
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
       binary += String.fromCharCode(bytes[i]);
     }
     return window.btoa(binary);
@@ -60,13 +61,19 @@ const useWebAuthnRegistration = () => {
         type: credentials.type,
       };
 
-      // Send registration response to server and return the response data
+      // Send registration response to server
       const registrationResponse = await axiosInstance.post('/webauthn/register/response/', registrationData);
+
+      // Check for error response from server
+      if (registrationResponse.status !== 200) {
+        throw new Error(registrationResponse.data.detail || "Registration failed.");
+      }
+
       return registrationResponse.data;
     } catch (e) {
       console.error(e);
       setError(e);
-      return null;  // Return null in case of error
+      throw e;  // Re-throw the error for the component to catch
     }
   };
 

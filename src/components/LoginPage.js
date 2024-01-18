@@ -1,15 +1,19 @@
 // LoginPage.js
-
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useWebAuthnAuthentication from '../hooks/useWebAuthnAuthentication';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const { initiateWebAuthnAuthentication, error } = useWebAuthnAuthentication();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await initiateWebAuthnAuthentication(username);
+    const result = await initiateWebAuthnAuthentication(username);
+    if (result && result.status === 'success') {
+      navigate('/dashboard');  // Redirect to dashboard upon successful login
+    }
   };
 
   return (
