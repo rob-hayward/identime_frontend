@@ -6,6 +6,8 @@ import WelcomePage from './components/WelcomePage';
 import LoginPage from './components/LoginPage';
 import RegistrationPage from './components/RegistrationPage';
 import DashboardPage from './components/DashboardPage';
+import SimpleRegistrationPage from './components/SimpleRegistrationPage';
+import SimpleLoginPage from './components/SimpleLoginPage';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegistrationPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/simple-register" element={<SimpleRegistrationPage />} />
+        <Route path="/simple-login" element={<SimpleLoginPage />} />
       </Routes>
     </Router>
   );

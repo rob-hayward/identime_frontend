@@ -1,3 +1,4 @@
+// useWebAuthnAuthentication.js
 import { useState } from 'react';
 import axiosInstance from '../api/axiosConfig';
 
@@ -6,43 +7,30 @@ const useWebAuthnAuthentication = () => {
 
   const initiateWebAuthnAuthentication = async (username) => {
     try {
-      // Requesting the challenge from the server
       const challengeResponse = await axiosInstance.post('/webauthn/login/challenge/', { username });
       const challengeOptions = challengeResponse.data;
 
-      // Converting the challenge from Base64URL to Uint8Array
       challengeOptions.challenge = base64urlToUint8Array(challengeOptions.challenge);
-
       if (challengeOptions.allowCredentials) {
-        challengeOptions.allowCredentials = challengeOptions.allowCredentials.map(cred => {
-          return { ...cred, id: base64urlToUint8Array(cred.id) };
-        });
+        challengeOptions.allowCredentials = challengeOptions.allowCredentials.map(cred => ({
+          ...cred, id: base64urlToUint8Array(cred.id)
+        }));
       }
 
-      // Requesting the assertion from the authenticator
       const assertion = await navigator.credentials.get({ publicKey: challengeOptions });
 
-      // Convert parts of the response to Base64URL and rawId to Hexadecimal
-      const authenticatorData = arrayBufferToBase64(assertion.response.authenticatorData);
-      const clientDataJSON = arrayBufferToBase64(assertion.response.clientDataJSON);
-      const signature = arrayBufferToBase64(assertion.response.signature);
-      const userHandle = assertion.response.userHandle ? arrayBufferToBase64(assertion.response.userHandle) : null;
-      const rawIdHex = arrayBufferToHex(assertion.rawId); // Converting rawId to Hexadecimal string
-
-      // Constructing the authentication response object
       const authenticationResponse = {
-        credential_id: rawIdHex,
-        authenticator_data: authenticatorData,
-        client_data_json: clientDataJSON,
-        signature: signature,
-        user_handle: userHandle,
-        raw_id: rawIdHex
+        credential_id: arrayBufferToBase64(assertion.rawId),
+        authenticator_data: arrayBufferToBase64(assertion.response.authenticatorData),
+        client_data_json: arrayBufferToBase64(assertion.response.clientDataJSON),
+        signature: arrayBufferToBase64(assertion.response.signature),
+        user_handle: assertion.response.userHandle ? arrayBufferToBase64(assertion.response.userHandle) : null,
+        raw_id: arrayBufferToBase64(assertion.rawId),
+        type: 'webauthn.get'
       };
 
-      // Logging the authentication response
-      console.log("Sending Authentication Response:", JSON.stringify(authenticationResponse, null, 2));
+      console.log("Sending authentication response to the server:", authenticationResponse); // Logging the payload
 
-      // Sending the authentication response to the server
       await axiosInstance.post('/webauthn/login/response/', authenticationResponse);
     } catch (e) {
       console.error("Authentication error:", e);
@@ -70,14 +58,8 @@ const useWebAuthnAuthentication = () => {
     for (let i = 0; i < len; i++) {
       binary += String.fromCharCode(bytes[i]);
     }
-    return window.btoa(binary);
-  };
-
-  // Helper function to convert ArrayBuffer to Hexadecimal
-  const arrayBufferToHex = (buffer) => {
-    return Array.from(new Uint8Array(buffer))
-      .map(b => b.toString(16).padStart(2, '0'))
-      .join('');
+    const base64 = window.btoa(binary);
+    return base64.padEnd(base64.length + (4 - base64.length % 4) % 4, '=');
   };
 
   return { initiateWebAuthnAuthentication, error };
