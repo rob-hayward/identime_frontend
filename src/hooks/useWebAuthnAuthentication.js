@@ -29,9 +29,10 @@ const useWebAuthnAuthentication = () => {
         type: 'webauthn.get'
       };
 
-      console.log("Sending authentication response to the server:", authenticationResponse); // Logging the payload
+      console.log("Sending authentication response to the server:", authenticationResponse);
 
-      await axiosInstance.post('/webauthn/login/response/', authenticationResponse);
+      const response = await axiosInstance.post('/webauthn/login/response/', authenticationResponse);
+      return response.data;  // Returning the response from the server
     } catch (e) {
       console.error("Authentication error:", e);
       setError(e);

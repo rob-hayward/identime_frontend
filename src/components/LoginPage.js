@@ -10,8 +10,8 @@ const LoginPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const result = await initiateWebAuthnAuthentication(username);
-    if (result && result.status === 'success') {
+    const response = await initiateWebAuthnAuthentication(username);
+    if (response && response.status === 'success') {
       navigate('/dashboard');  // Redirect to dashboard upon successful login
     }
   };
