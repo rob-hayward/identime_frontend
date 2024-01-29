@@ -1,9 +1,7 @@
-// axiosConfig.js
-
 import axios from 'axios';
 
-// Function to get CSRF token from cookies
-function getCookie(name) {
+function getCSRFToken() {
+  const name = 'csrftoken';
   let cookieValue = null;
   if (document.cookie && document.cookie !== '') {
     const cookies = document.cookie.split(';');
@@ -18,15 +16,17 @@ function getCookie(name) {
   return cookieValue;
 }
 
-const csrftoken = getCookie('csrftoken');
-
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:8000/api/',
   withCredentials: true,
-  headers: {
-    'X-CSRFToken': csrftoken,
-  },
+});
+
+axiosInstance.interceptors.request.use(config => {
+  const csrfToken = getCSRFToken();
+  if (csrfToken) {
+    config.headers['X-CSRFToken'] = csrfToken;
+  }
+  return config;
 });
 
 export default axiosInstance;
-
