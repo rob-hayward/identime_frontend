@@ -1,7 +1,7 @@
 // src/components/RegistrationModalOne.js
 
 import React, { useState } from 'react';
-import './RegistrationModalOne.css'; // Import the CSS file
+import './RegistrationModalOne.css';
 
 const ModalOne = ({ handleUserDetails, nextStep }) => {
   const [preferredName, setPreferredName] = useState('');

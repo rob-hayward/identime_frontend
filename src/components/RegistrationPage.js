@@ -78,21 +78,21 @@ const RegistrationPage = () => {
   };
 
   const getModal = () => {
-    switch (step) {
-      case 1:
-        return <ModalOne handleUserDetails={handleUserDetails} nextStep={nextStep} />;
-      case 2:
-        return <ModalTwo userDetails={userDetails} nextStep={nextStep} handleSubmitEmail={handleSubmitEmail} />;
-      case 3:
-        return <ModalThree userDetails={userDetails} handleResendEmail={() => previousStep()} />;
-      case 4:
-        return <ModalFour userDetails={userDetails} handleUserDetails={handleUserDetails} nextStep={nextStep} />;
-      case 5:
-        return <ModalFive userDetails={userDetails} onRegistrationComplete={completeRegistration} />;
-      default:
-        return <div>Error: Unknown step</div>;
-    }
-  };
+  switch (step) {
+    case 1:
+      return <ModalOne key="modal-one" handleUserDetails={handleUserDetails} nextStep={nextStep} />;
+    case 2:
+      return <ModalTwo key="modal-two" userDetails={userDetails} nextStep={nextStep} handleSubmitEmail={handleSubmitEmail} />;
+    case 3:
+      return <ModalThree key="modal-three" userDetails={userDetails} handleResendEmail={() => previousStep()} />;
+    case 4:
+      return <ModalFour key="modal-four" userDetails={userDetails} handleUserDetails={handleUserDetails} nextStep={nextStep} />;
+    case 5:
+      return <ModalFive key="modal-five" userDetails={userDetails} onRegistrationComplete={completeRegistration} />;
+    default:
+      return <div key="modal-error">Error: Unknown step</div>;
+  }
+};
 
   return (
     <div className="modalTransitionWrapper">
