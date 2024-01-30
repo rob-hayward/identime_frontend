@@ -1,0 +1,55 @@
+/* DashboardPage.css */
+
+.dashboard-container {
+  text-align: center;
+  padding: 20px;
+  color: #E0E0E0;
+}
+
+.dashboard-heading {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.user-info-form {
+  margin-bottom: 20px;
+}
+
+.user-info-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.user-info-form input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #E0E0E0;
+  border-radius: 5px;
+  background-color: #222;
+  color: #E0E0E0;
+}
+
+.update-button, .logout-button {
+  padding: 10px 20px;
+  background-color: transparent;
+  color: #E0E0E0;
+  border: 2px solid #E0E0E0;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  cursor: pointer;
+}
+
+.update-button:hover, .logout-button:hover {
+  background-color: #E0E0E0;
+  color: #000;
+  border-color: transparent;
+}
+
+@media (max-width: 768px) {
+  .user-info-form input, .update-button, .logout-button {
+    width: 90%;
+  }
+}

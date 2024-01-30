@@ -1,6 +1,7 @@
 // src/components/RegistrationModalFour.js
 import React, { useState, useEffect } from 'react';
 import { useUser } from '../contexts/UserContext';
+import './RegistrationModalFour.css';
 
 const ModalFour = ({ nextStep }) => {
   const { userDetails, updateUserDetails } = useUser();
@@ -31,14 +32,26 @@ const ModalFour = ({ nextStep }) => {
     };
   }, [scriptId]); // Added scriptId as a dependency
 
-  const initializeAutocomplete = () => {
-    if (!window.google) {
-      console.error("Google Maps JavaScript API not loaded");
-      return;
+  // Function to initialize the Google Places Autocomplete
+const initializeAutocomplete = () => {
+  if (!window.google) {
+    console.error("Google Maps JavaScript API not loaded");
+    return;
+  }
+  const input = document.getElementById('address-input-modal-four');
+  const autocomplete = new window.google.maps.places.Autocomplete(input, { types: ['address'] });
+
+  autocomplete.addListener('place_changed', () => {
+    const place = autocomplete.getPlace();
+    if (place.address_components) {
+      const postalCodeObject = place.address_components.find(component => component.types.includes('postal_code'));
+      const postalCode = postalCodeObject ? postalCodeObject.long_name : '';
+      console.log("Postal Code:", postalCode);
+      // You can then use the postal code as needed
     }
-    const input = document.getElementById('address-input-modal-four');
-    new window.google.maps.places.Autocomplete(input, { types: ['address'] });
-  };
+  });
+};
+
 
   // Debugging: Log the userDetails when the component mounts
   useEffect(() => {
@@ -57,41 +70,41 @@ const ModalFour = ({ nextStep }) => {
   };
 
   return (
-    <div>
-      <h2>Welcome Back, {userDetails.preferredName}!</h2>
-      <p>Thank you for verifying your email address: {userDetails.email}.</p>
-      <p>Just a few more steps to complete your registration.</p>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-          placeholder="Full Name"
-          required
-        />
-        <input
-          id="address-input-modal-four"
-          type="text"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          placeholder="Enter postcode"
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="Confirm Password"
-          required
-        />
-        <button type="submit">Submit Information</button>
+      <div className="modalContainerFour">
+      <h2 className="headingFour">Welcome back, {userDetails.preferredName}!</h2>
+      <p className="descriptionFour">Thank you for verifying your email address: {userDetails.email}.</p>
+        <form onSubmit={handleSubmit} className="formFour">
+          <input
+              type="text"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              placeholder="Full Name"
+              required
+          />
+          <textarea
+            id="address-input-modal-four"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="Start Typing Your Address"
+            required
+          ></textarea>
+          <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              required
+          />
+          <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm Password"
+              required
+          />
+          <button type="submit" className="submitButtonFour">Submit Information</button>
       </form>
+      <div className="step-indicator">Step 4 of 5</div>
     </div>
   );
 };

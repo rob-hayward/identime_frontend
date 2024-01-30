@@ -21,7 +21,7 @@ const ModalTwo = ({ nextStep, handleSubmitEmail }) => {
 
   return (
       <div className="modalContainerTwo">
-        <h2 className="headingTwo">Welcome to Authentech {userDetails.preferredName}.</h2>
+        <h2 className="headingTwo">Welcome to AuthenTech {userDetails.preferredName}.</h2>
         <p>Please provide and verify your email address to show that you are a real person.</p>
         {error && <p className="error">{error}</p>}
         <form onSubmit={handleEmailSubmit} className="formTwo">

@@ -11,19 +11,19 @@ const WelcomePage = () => {
           <img src={`${process.env.PUBLIC_URL}/AuthenTechLogo.png`} alt="AuthenTech Logo" className="logo"/>
 
           <h1>AuthenTech</h1>
-          <h2>Seamlessly Simple Personal Security</h2>
           <div className="paragraph-container">
               <ul>
+                  <li>Seamless, simple, personal security.</li>
+                  <li>Convenient, one-touch, passwordless access.</li>
                   <li>Advanced biometric authentication for robust security.</li>
-                  <li>Convenience of one-touch, passwordless access.</li>
-                  <li>Discover a user-friendly approach to digital safety.</li>
               </ul>
+              <div className="auth-options">
+              <Link to="/register" className="auth-link">Register</Link>
+                  <Link to="/login" className="auth-link">Login</Link>
+              </div>
           </div>
 
-          <div className="auth-options">
-              <Link to="/register" className="auth-link">Register</Link>
-              <Link to="/login" className="auth-link">Login</Link>
-          </div>
+
       </div>
   );
 };

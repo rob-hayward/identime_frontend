@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useSearchParams, useNavigate } from 'react-router-dom';
 import { useUser } from '../contexts/UserContext'; // Import useUser
+import './RegistrationPage.css';
 import ModalOne from './RegistrationModalOne';
 import ModalTwo from './RegistrationModalTwo';
 import ModalThree from './RegistrationModalThree';
@@ -76,20 +77,28 @@ const RegistrationPage = () => {
     navigate('/dashboard');
   };
 
-  switch (step) {
-    case 1:
-      return <ModalOne handleUserDetails={handleUserDetails} nextStep={nextStep} />;
-    case 2:
-      return <ModalTwo userDetails={userDetails} nextStep={nextStep} handleSubmitEmail={handleSubmitEmail} />;
-    case 3:
-      return <ModalThree userDetails={userDetails} handleResendEmail={() => previousStep()} />;
-    case 4:
-      return <ModalFour userDetails={userDetails} handleUserDetails={handleUserDetails} nextStep={nextStep} />;
-    case 5:
-      return <ModalFive userDetails={userDetails} onRegistrationComplete={completeRegistration} />;
-    default:
-      return <div>Error: Unknown step</div>;
-  }
+  const getModal = () => {
+    switch (step) {
+      case 1:
+        return <ModalOne handleUserDetails={handleUserDetails} nextStep={nextStep} />;
+      case 2:
+        return <ModalTwo userDetails={userDetails} nextStep={nextStep} handleSubmitEmail={handleSubmitEmail} />;
+      case 3:
+        return <ModalThree userDetails={userDetails} handleResendEmail={() => previousStep()} />;
+      case 4:
+        return <ModalFour userDetails={userDetails} handleUserDetails={handleUserDetails} nextStep={nextStep} />;
+      case 5:
+        return <ModalFive userDetails={userDetails} onRegistrationComplete={completeRegistration} />;
+      default:
+        return <div>Error: Unknown step</div>;
+    }
+  };
+
+  return (
+    <div className="modalTransitionWrapper">
+      {getModal()}
+    </div>
+  );
 };
 
 export default RegistrationPage;

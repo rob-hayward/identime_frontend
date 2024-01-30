@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useWebAuthnAuthentication from '../hooks/useWebAuthnAuthentication';
+import './LoginPage.css';  // Import the CSS file
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -17,19 +18,20 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="loginContainer">
+      <img src={`${process.env.PUBLIC_URL}/AuthenTechLogo.png`} alt="AuthenTech Logo" className="logoSmall"/>
+      <form onSubmit={handleSubmit} className="loginForm">
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
+          placeholder="Enter Email Address"
           required
+          className="loginInput"
         />
-        <button type="submit">Login with WebAuthn</button>
+        <button type="submit" className="loginButton">Login with WebAuthn</button>
       </form>
-      {error && <p>Error: {error.message}</p>}
+      {error && <p className="loginError">Error: {error.message}</p>}
     </div>
   );
 };

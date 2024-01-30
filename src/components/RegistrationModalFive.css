@@ -1,0 +1,65 @@
+/*src/components/RegistrationModalFive.css*/
+
+.modalContainerFive {
+  text-align: center;
+  padding: 20px;
+  border: 2px solid #E0E0E0;
+  border-radius: 10px;
+  background-color: #000;
+  color: #E0E0E0;
+  max-width: 500px;
+  margin: auto;
+  margin-top: 20vh;
+  position: relative;
+}
+
+.headingFive {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.paragraphFive {
+  margin-bottom: 20px;
+}
+
+.errorFive {
+  color: #ff6666;
+  margin-bottom: 10px;
+}
+
+.buttonFive {
+  padding: 10px 20px;
+  background-color: transparent;
+  color: #E0E0E0;
+  border: 2px solid #E0E0E0;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  cursor: pointer;
+}
+
+.buttonFive:hover {
+  background-color: #E0E0E0;
+  color: #000;
+  border-color: transparent;
+}
+
+.step-indicator {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 0.8rem;
+  color: #E0E0E0;
+}
+
+.logoSmall {
+  max-width: 100px; /* Adjust the size as needed */
+  margin-bottom: 20px; /* Spacing below the logo */
+}
+
+@media (max-width: 768px) {
+  .buttonFive {
+    width: 90%;
+  }
+}

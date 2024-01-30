@@ -1,7 +1,9 @@
 // src/components/RegistrationModalFive.js
 import React, { useState } from 'react';
+import './RegistrationModalFive.css';
 import useWebAuthnRegistration from '../hooks/useWebAuthnRegistration';
 import { useUser } from '../contexts/UserContext'; // Import useUser
+
 
 const ModalFive = ({ onRegistrationComplete }) => {
   const { userDetails } = useUser(); // Use context
@@ -23,12 +25,15 @@ const ModalFive = ({ onRegistrationComplete }) => {
   };
 
   return (
-    <div>
-      <h2>WebAuthn Registration</h2>
-      <p>Click the button below to complete your registration with WebAuthn. Your username is {userDetails.email}</p>
-      <button onClick={handleWebAuthnRegister}>Register with WebAuthn</button>
-      {registrationError && <p>Error: {registrationError}</p>}
-      {error && <p>Error: {error.message}</p>}
+    <div className="modalContainerFive"> {/* Apply the CSS class */}
+      <img src={`${process.env.PUBLIC_URL}/AuthenTechLogo.png`} alt="AuthenTech Logo" className="logoSmall"/>
+      <p className="paragraphFive">
+        Complete your AuthenTech registration by using finger print or face scan on you device with WebAuthn.
+      </p>
+      <button className="buttonFive" onClick={handleWebAuthnRegister}>Register with WebAuthn</button>
+      {registrationError && <p className="errorFive">Error: {registrationError}</p>}
+      {error && <p className="errorFive">Error: {error.message}</p>}
+      <div className="step-indicator">Step 5 of 5</div>
     </div>
   );
 };
