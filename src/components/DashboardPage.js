@@ -2,20 +2,32 @@
 
 import React from 'react';
 import useLogout from '../hooks/useLogout';
-import { useUser } from '../contexts/UserContext';
 import './DashboardPage.css';
 
-const DashboardPage = () => {
-  const { userDetails } = useUser();
-  const logout = useLogout();
 
+const DashboardPage = () => {
+  const logout = useLogout();
   return (
-    <div className="dashboard-container">
-      <h1 className="dashboard-heading">Dashboard</h1>
-      <p>Welcome to your dashboard.</p>
-      <button onClick={logout} className="logout-button">Logout</button>
-    </div>
+      <div className="welcome-page">
+          {/* Logo Image */}
+          <img src={`${process.env.PUBLIC_URL}/AuthenTechLogo.png`} alt="AuthenTech Logo" className="logo"/>
+
+          <h1>AuthenTech</h1>
+          <div className="paragraph-container">
+              <ul>
+                  <li>Seamless, simple, personal security.</li>
+                  <li>Convenient, one-touch, passwordless access.</li>
+                  <li>Advanced biometric authentication for robust security.</li>
+              </ul>
+              <div className="auth-options">
+                  <button onClick={logout} className="logout-button">Logout</button>
+              </div>
+          </div>
+
+
+      </div>
   );
 };
 
 export default DashboardPage;
+
