@@ -18,7 +18,7 @@ const ModalFour = ({ nextStep }) => {
 
       const script = document.createElement('script');
       script.id = scriptId;
-      script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAfkiQLsP_xb9VAl9uV0xzft6_RW-yzcqU&libraries=places`;
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}&libraries=places`;
       script.async = true;
       script.onload = () => initializeAutocomplete();
       document.body.appendChild(script);
